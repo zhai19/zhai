@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        #banner{
+            position: relative;
+            width: 1226px;
+            height: 460px;
+            margin: 0 auto;
+        }
+        #banner .item{
+            position: absolute;
+            display: none;
+            top: 0;
+            left: 0;
+        }
+        .ir-tab .btn{
+            position: absolute;
+            top: 200px;
+            width: 41px;
+            height: 69px;
+            background-image: url("images/icon-slides.png");    
+
+        }
+        .ir-tab .left{
+            left: 236px;
+            background-position:-83px;
+        }
+        .ir-tab .right{
+            right: 0;
+            background-position:-125px;
+        }
+        .ir-tab .left:hover{
+            left: 236px;
+            background-position:0px;
+        }
+        .ir-tab .right:hover{
+            right: 0;
+            background-position:-41px;
+        }
+        .tab-btn{
+            position: absolute;
+            right: 30px;
+            bottom: 20px;
+            width: 120px;
+            height: 30px;
+        }
+        .tab-btn .btn{
+            float: left;
+            width: 8px;
+            height: 8px;
+            background: #868686;
+            border: 2px solid #c3c3c3;
+            margin-left: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="banner">
+        <div class="img-wrap">
+            <ul>
+                <li class="item" style="display:block">
+                    <img src="images/1.jpg" width="1226" height="460">
+                </li>
+                <li class="item">
+                    <img src="images/2.jpg" width="1226" height="460">
+                </li>
+                <li class="item">
+                    <img src="images/3.jpg" width="1226" height="460">
+                </li>
+                <li class="item">
+                    <img src="images/4.jpg" width="1226" height="460">
+                </li>
+                <li class="item">
+                    <img src="images/5.jpg" width="1226" height="460">
+                </li>
+            </ul>
+        </div>
+        <div class="ir-tab">
+            <div class="left btn"></div>
+            <div class="right btn"></div>
+        </div>
+        <div class="tab-btn">
+            <div class="btn active"></div>
+            <div class="btn"></div>
+            <div class="btn"></div>
+            <div class="btn"></div>
+            <div class="btn"></div>
++       </div>
+    </div>
+
+    <script type="text/javascript">
+
+        ;(function(){
+
+            var img = document.getElementsByClassName("item");
+            var btn = document.querySelector(".tab-btn").children;
+            var next = document.querySelector(".right");
+            var prev = document.querySelector(".left");
+            var banner = document.getElementById("banner");
+
+            btn[0].style.backgroundColor = "#e4e4e4";
+            var x = 0;
+            var timer = null;
+
+            ani();
+
+            // tab切换
+            for(var i = 0;i < btn.length;i++){
+                btn[i].index = i;
+                btn[i].onclick=function(){
+                    for(var j = 0;j < btn.length;j++){
+                        img[j].style.display = "none";
+                        btn[j].style.backgroundColor = "#868686";
+                    }
+                     btn[this.index].style.backgroundColor = "#e4e4e4";
+                    img[this.index].style.display = "block";
+
+                    x = this.index;
+                }
+            }
+
+            // 下一张
+            next.onclick = function(){
+                x++;
+                if(x > img.length - 1){
+                    x = 0;
+                }
+                linkage();
+            }
+            // 上一张
+            prev.onclick = function(){
+                x--;
+                if(x < 0){
+                    x = img.length - 1;
+                }
+                linkage();
+            }
+
+            // 鼠标移入清除定时器
+            banner.onmouseover = function(){
+                clearInterval(timer);
+            }
+
+            // 鼠标移出重启定时器
+            banner.onmouseout = function(){
+                ani();
+            }
+
+            // 封装函数
+            function linkage(){
+                for(var j = 0;j < btn.length;j++){
+                    img[j].style.display = "none";
+                    btn[j].style.backgroundColor = "#868686";
+                }
+                    btn[x].style.backgroundColor = "#e4e4e4";
+                    img[x].style.display = "block";
+            }
+
+            // 定时器
+            function ani(){
+                timer = setInterval(function(){
+                    x++;
+                    if(x > img.length - 1){
+                        x = 0;
+                    }
+                    linkage();
+                },1000);
+            }
+
+        }());
+
+    </script>
+    
+</body>
+</html>
